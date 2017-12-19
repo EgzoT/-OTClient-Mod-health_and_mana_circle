@@ -1,0 +1,19 @@
+HealthCircle < UIProgressBar
+  image-source: /game_healthcircle/img_game_healthcircle/health_circle
+  opacity: 0.7
+  phantom: true
+
+ManaCircle < UIProgressBar
+  image-source: /game_healthcircle/img_game_healthcircle/mana_circle
+  opacity: 0.7
+  phantom: true
+
+HealthCircleFront < UIProgressBar
+  image-source: /game_healthcircle/img_game_healthcircle/health_circle_top
+  opacity: 0.7
+  phantom: true
+
+ManaCircleFront < UIProgressBar
+  image-source: /game_healthcircle/img_game_healthcircle/mana_circle_top
+  opacity: 0.7
+  phantom: true
