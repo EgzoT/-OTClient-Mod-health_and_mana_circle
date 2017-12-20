@@ -10,10 +10,9 @@ Add folder [game_healthcircle] to "mods" or "modules" folder (recommended "mods"
 
 # How it's look like
 
-![Show1](https://dl.getdropbox.com/s/5tcndxsc93r2htb/circle_hp_mp.png)
-![Show2](https://dl.getdropbox.com/s/twnnu47r6283adf/Circle_Hp_Mp_19.12.2017.gif)
-![Show3](https://dl.getdropbox.com/s/ecvt3tnl8tvtxq8/circle_hp_mp_2.png)
+![Show1](https://i.imgur.com/sENsGKQ.png)
+![Show2](https://i.imgur.com/ABZF1gg.png)
 
 # Credits
-
+@GustavoBlaze
 @Tekadon58 [graphics](https://github.com/edubart/otclient/issues/923)
