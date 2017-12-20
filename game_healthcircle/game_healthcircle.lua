@@ -70,9 +70,25 @@ end
 
 function whenHealthChange()
   if g_game.isOnline() then
-    local Yhppc = math.floor(208 * (1 - (g_game.getLocalPlayer():getHealthPercent() / 100)))
+    local healthPercent = math.floor(g_game.getLocalPlayer():getHealthPercent())
+    local Yhppc = math.floor(208 * (1 - (healthPercent/ 100)))
     local rect = { x = 0, y = Yhppc, width = 63, height = 208 }
     healthCircleFront:setImageClip(rect)
+
+    if healthPercent > 92 then
+      healthCircleFront:setImageColor("#00BC00")
+    elseif healthPercent > 60 then
+      healthCircleFront:setImageColor("#50A150")
+    elseif healthPercent > 30 then
+      healthCircleFront:setImageColor("#A1A100")
+    elseif healthPercent > 8 then
+      healthCircleFront:setImageColor("#BF0A0A")
+    elseif healthPercent > 3 then
+      healthCircleFront:setImageColor("#910F0F")
+    else
+      healthCircleFront:setImageColor("#850C0C")
+    end
+
     if currentViewMode() ~= 2 then
       healthCircleFront:setY(mapPanel:getHeight() / 2 - healthCircle:getHeight() / 2 + 30 + Yhppc)
     else
@@ -100,29 +116,29 @@ function whenMapResizeChange()
     whenManaChange()
 
     if currentViewMode() == 2 then
-      healthCircleFront:setX(mapPanel:getWidth() / 2 + healthCircle:getWidth() / 2 - 150)
-      manaCircleFront:setX(mapPanel:getWidth() / 2 + manaCircle:getWidth() / 2 + 0)
+      healthCircleFront:setX(math.floor((mapPanel:getWidth() / 2 + healthCircle:getWidth() / 2 - 150)) * 0.92)
+      manaCircleFront:setX(math.floor((mapPanel:getWidth() / 2 + manaCircle:getWidth() / 2 + 0)) * 1.08)
 
-      healthCircle:setX(mapPanel:getWidth() / 2 + healthCircle:getWidth() / 2 - 150)
-      manaCircle:setX(mapPanel:getWidth() / 2 + manaCircle:getWidth() / 2 + 0)
+      healthCircle:setX(math.floor((mapPanel:getWidth() / 2 + healthCircle:getWidth() / 2 - 150)) * 0.92)
+      manaCircle:setX(math.floor((mapPanel:getWidth() / 2 + manaCircle:getWidth() / 2 + 0)) * 1.08)
 
       healthCircle:setY(mapPanel:getHeight() / 2 - healthCircle:getHeight() / 2 + 0)
       manaCircle:setY(mapPanel:getHeight() / 2 - manaCircle:getHeight() / 2 + 0)
     elseif gameLeftPanel:isOn() then
-      healthCircleFront:setX(mapPanel:getWidth() / 2 + healthCircle:getWidth() / 2 - 150 + gameLeftPanel:getWidth())
-      manaCircleFront:setX(mapPanel:getWidth() / 2 + manaCircle:getWidth() / 2 + gameLeftPanel:getWidth())
+      healthCircleFront:setX(math.floor((mapPanel:getWidth() / 2 + healthCircle:getWidth() / 2 - 150 + gameLeftPanel:getWidth())) * 0.92)
+      manaCircleFront:setX(math.floor((mapPanel:getWidth() / 2 + manaCircle:getWidth() / 2 + gameLeftPanel:getWidth())) * 1.08)
 
-      healthCircle:setX(mapPanel:getWidth() / 2 + healthCircle:getWidth() / 2 - 150 + gameLeftPanel:getWidth())
-      manaCircle:setX(mapPanel:getWidth() / 2 + manaCircle:getWidth() / 2 + gameLeftPanel:getWidth())
+      healthCircle:setX(math.floor((mapPanel:getWidth() / 2 + healthCircle:getWidth() / 2 - 150 + gameLeftPanel:getWidth())) * 0.92)
+      manaCircle:setX(math.floor((mapPanel:getWidth() / 2 + manaCircle:getWidth() / 2 + gameLeftPanel:getWidth())) * 1.08)
 
       healthCircle:setY(mapPanel:getHeight() / 2 - healthCircle:getHeight() / 2 + 30)
       manaCircle:setY(mapPanel:getHeight() / 2 - manaCircle:getHeight() / 2 + 30)
     else
-      healthCircleFront:setX(mapPanel:getWidth() / 2 + healthCircle:getWidth() / 2 - 150)
-      manaCircleFront:setX(mapPanel:getWidth() / 2 + manaCircle:getWidth() / 2 + 0)
+      healthCircleFront:setX(math.floor((mapPanel:getWidth() / 2 + healthCircle:getWidth() / 2 - 150)) * 0.92)
+      manaCircleFront:setX(math.floor((mapPanel:getWidth() / 2 + manaCircle:getWidth() / 2 + 0)) * 1.08)
 
-      healthCircle:setX(mapPanel:getWidth() / 2 + healthCircle:getWidth() / 2 - 150)
-      manaCircle:setX(mapPanel:getWidth() / 2 + manaCircle:getWidth() / 2 + 0)
+      healthCircle:setX(math.floor((mapPanel:getWidth() / 2 + healthCircle:getWidth() / 2 - 150)) * 0.92)
+      manaCircle:setX(math.floor((mapPanel:getWidth() / 2 + manaCircle:getWidth() / 2 + 0)) * 1.08)
 
       healthCircle:setY(mapPanel:getHeight() / 2 - healthCircle:getHeight() / 2 + 30)
       manaCircle:setY(mapPanel:getHeight() / 2 - manaCircle:getHeight() / 2 + 30)
