@@ -14,40 +14,11 @@ Add folder [game_healthcircle] to "mods" or "modules" folder (recommended "mods"
 ![Show2](https://i.imgur.com/ABZF1gg.png)
 ![Show3_1.2](https://dl.getdropbox.com/s/juhuuaaurpzew62/New_game_healthcircle_04-03-2018.png)
 
-# Additional controlling
+# Additional options
 
-- Set **ON** exp circle:
-```
-modules.game_healthcircle.setExpCircle(true)
-```
+![Options](https://dl.getdropbox.com/s/eji2inrqr42l7ag/options_hp_mp_circle.png)
 
-- Set **OFF** exp circle:
-```
-modules.game_healthcircle.setExpCircle(false)
-```
-
-- Set **ON** skill circle:
-```
-modules.game_healthcircle.setSkillCircle(true)
-```
-
-- Set **OFF** skill circle:
-```
-modules.game_healthcircle.setSkillCircle(false)
-```
-
-- Change skill in bottom circle:
-```
-modules.game_healthcircle.setSkillType(skillType)
-```
-
-| `skillType` | magic | fist | club | sword | axe | distance | shielding | fishing |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-
-```
-For example:
-modules.game_healthcircle.setSkillType("sword")
-```
+To change module options go to **options module** and set **Hp MP Circle**.
 
 # Credits
 @GustavoBlaze
