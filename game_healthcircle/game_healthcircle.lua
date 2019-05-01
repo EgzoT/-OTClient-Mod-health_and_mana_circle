@@ -362,7 +362,7 @@ function addToOptionsModule()
   --Set values
   experienceCheckBox:setChecked(isExpCircle)
   skillCheckBox:setChecked(isSkillCircle)
-  chooseSkillComboBox:setText(skillType)
+  chooseSkillComboBox:setOption(skillType)
   --Prevent skill overwritten before initialize
   skillsLoaded = true
 end
