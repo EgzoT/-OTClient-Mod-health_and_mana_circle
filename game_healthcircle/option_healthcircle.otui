@@ -1,0 +1,51 @@
+Panel
+  CheckBox
+    id: experienceCheckBox
+    text: Experience circle
+    phantom: false
+    !tooltip: tr('On experience circle')
+    anchors.left: parent.left
+    anchors.top: parent.top
+    width: 140
+    //margin-top: 8
+    @onCheckChange: |
+      if self:isChecked() then
+        modules.game_healthcircle.setExpCircle(true)
+      else
+        modules.game_healthcircle.setExpCircle(false)
+      end
+
+  CheckBox
+    id: skillCheckBox
+    text: Skill circle
+    phantom: false
+    !tooltip: tr('On skill circle')
+    anchors.left: parent.left
+    anchors.top: experienceCheckBox.bottom
+    width: 140
+    margin-top: 8
+    @onCheckChange: |
+      if self:isChecked() then
+        modules.game_healthcircle.setSkillCircle(true)
+      else
+        modules.game_healthcircle.setSkillCircle(false)
+      end
+
+  Label
+    id: chooseSkillLabel
+    width: 60
+    !text: tr('Skill:')
+    phantom: false
+    !tooltip: tr('Choose skill to show in skill circle.')
+    anchors.left: parent.left
+    anchors.top: skillCheckBox.bottom
+    margin-top: 13
+
+  ComboBox
+    id: chooseSkillComboBox
+    width: 120
+    anchors.left: chooseSkillLabel.right
+    anchors.top: skillCheckBox.bottom
+    margin-top: 10
+    mouse-scroll: false
+    @onTextChange: modules.game_healthcircle.setSkillType(self:getText())

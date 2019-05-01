@@ -22,6 +22,8 @@ skillCircleFront = nil
 isExpCircle = g_settings.getBoolean('healthcircle_expcircle')
 isSkillCircle = g_settings.getBoolean('healthcircle_skillcircle')
 skillType = g_settings.getString('healthcircle_skilltype')
+skillsLoaded = false
+
 if not (skillType == 'magic' or skillType == 'fist' or skillType == 'club' or skillType == 'sword' or skillType == 'axe' or skillType == 'distance' or skillType == 'shielding' or skillType == 'fishing') then
   skillType = 'magic'
 end
@@ -51,6 +53,9 @@ function init()
     skillCircle:setVisible(false)
     skillCircleFront:setVisible(false)
   end
+
+  --Add option window in options module
+  addToOptionsModule()
 end
 
 function terminate()
@@ -313,6 +318,10 @@ function setSkillCircle(value)
 end
 
 function setSkillType(skill)
+  if not skillsLoaded then
+    return
+  end
+  
   if skill == 'magic' or skill == 'fist' or skill == 'club' or skill == 'sword' or skill == 'axe' or skill == 'distance' or skill == 'shielding' or skill == 'fishing' then
     skillType = skill
     whenMapResizeChange()
@@ -324,4 +333,36 @@ function setSkillType(skill)
       g_settings.set('healthcircle_skilltype', 'magic')
     end
   end
+end
+
+-------------------------------------------------
+--Option Settings--------------------------------
+-------------------------------------------------
+
+function addToOptionsModule()
+  --Add to options module
+  optionPanel = g_ui.loadUI('option_healthcircle')
+  modules.client_options.addTab(tr('Hp Mp Circle'), optionPanel, '/game_healthcircle/img_game_healthcircle/hp_mp_circle')
+
+  --UI values
+  experienceCheckBox = optionPanel:recursiveGetChildById('experienceCheckBox')
+  skillCheckBox = optionPanel:recursiveGetChildById('skillCheckBox')
+  chooseSkillComboBox = optionPanel:recursiveGetChildById('chooseSkillComboBox')
+
+  --ComboBox start values 
+  chooseSkillComboBox:addOption('magic')
+  chooseSkillComboBox:addOption('fist')
+  chooseSkillComboBox:addOption('club')
+  chooseSkillComboBox:addOption('sword')
+  chooseSkillComboBox:addOption('axe')
+  chooseSkillComboBox:addOption('distance')
+  chooseSkillComboBox:addOption('shielding')
+  chooseSkillComboBox:addOption('fishing')
+
+  --Set values
+  experienceCheckBox:setChecked(isExpCircle)
+  skillCheckBox:setChecked(isSkillCircle)
+  chooseSkillComboBox:setText(skillType)
+  --Prevent skill overwritten before initialize
+  skillsLoaded = true
 end
