@@ -19,10 +19,17 @@ manaCircleFront = nil
 expCircleFront = nil
 skillCircleFront = nil
 
+optionPanel = nil
+
+isHealthCircle = not g_settings.getBoolean('healthcircle_hpcircle')
+isManaCircle = not g_settings.getBoolean('healthcircle_mpcircle')
 isExpCircle = g_settings.getBoolean('healthcircle_expcircle')
 isSkillCircle = g_settings.getBoolean('healthcircle_skillcircle')
 skillType = g_settings.getString('healthcircle_skilltype')
 skillsLoaded = false
+
+distanceFromCenter = g_settings.getNumber('healthcircle_distfromcenter')
+opacityCircle = g_settings.getNumber('healthcircle_opacity', 0.7)
 
 if not (skillType == 'magic' or skillType == 'fist' or skillType == 'club' or skillType == 'sword' or skillType == 'axe' or skillType == 'distance' or skillType == 'shielding' or skillType == 'fishing') then
   skillType = 'magic'
@@ -43,6 +50,16 @@ function init()
   initOnHpAndMpChange()
   initOnGeometryChange()
   initOnLoginChange()
+
+  if not isHealthCircle then
+    healthCircle:setVisible(false)
+    healthCircleFront:setVisible(false)
+  end
+
+  if not isManaCircle then
+    manaCircle:setVisible(false)
+    manaCircleFront:setVisible(false)
+  end
 
   if not isExpCircle then
     expCircle:setVisible(false)
@@ -203,73 +220,73 @@ function whenMapResizeChange()
     end
 
     if currentViewMode() == 2 then
-      healthCircleFront:setX(math.floor(mapPanel:getWidth() / 2 - barDistance - healthCircle:getWidth()))
-      manaCircleFront:setX(math.floor(mapPanel:getWidth() / 2 + barDistance))
+      healthCircleFront:setX(math.floor(mapPanel:getWidth() / 2 - barDistance - healthCircle:getWidth()) - distanceFromCenter)
+      manaCircleFront:setX(math.floor(mapPanel:getWidth() / 2 + barDistance) + distanceFromCenter)
 
-      healthCircle:setX(math.floor(mapPanel:getWidth() / 2 - barDistance - healthCircle:getWidth()))
-      manaCircle:setX(math.floor((mapPanel:getWidth() / 2 + barDistance)))
+      healthCircle:setX(math.floor(mapPanel:getWidth() / 2 - barDistance - healthCircle:getWidth()) - distanceFromCenter)
+      manaCircle:setX(math.floor((mapPanel:getWidth() / 2 + barDistance)) + distanceFromCenter)
 
       healthCircle:setY(mapPanel:getHeight() / 2 - healthCircle:getHeight() / 2 + 0)
       manaCircle:setY(mapPanel:getHeight() / 2 - manaCircle:getHeight() / 2 + 0)
 
       if isExpCircle then
-        expCircleFront:setY(math.floor(mapPanel:getHeight() / 2 - barDistance - expCircle:getHeight()))
+        expCircleFront:setY(math.floor(mapPanel:getHeight() / 2 - barDistance - expCircle:getHeight()) - distanceFromCenter)
 
         expCircle:setX(math.floor(mapPanel:getWidth() / 2 - expCircle:getWidth() / 2))
-        expCircle:setY(math.floor(mapPanel:getHeight() / 2 - barDistance - expCircle:getHeight()))
+        expCircle:setY(math.floor(mapPanel:getHeight() / 2 - barDistance - expCircle:getHeight()) - distanceFromCenter)
       end
 
       if isSkillCircle then
-        skillCircleFront:setY(math.floor(mapPanel:getHeight() / 2 + barDistance))
+        skillCircleFront:setY(math.floor(mapPanel:getHeight() / 2 + barDistance) + distanceFromCenter)
 
         skillCircle:setX(math.floor(mapPanel:getWidth() / 2 - skillCircle:getWidth() / 2))
-        skillCircle:setY(math.floor(mapPanel:getHeight() / 2 + barDistance))
+        skillCircle:setY(math.floor(mapPanel:getHeight() / 2 + barDistance) + distanceFromCenter)
       end
     elseif gameLeftPanel:isOn() then
-      healthCircleFront:setX(math.floor(mapPanel:getWidth() / 2 - barDistance - healthCircle:getWidth() + gameLeftPanel:getWidth()))
-      manaCircleFront:setX(math.floor(mapPanel:getWidth() / 2 + barDistance + gameLeftPanel:getWidth()))
+      healthCircleFront:setX(math.floor(mapPanel:getWidth() / 2 - barDistance - healthCircle:getWidth() + gameLeftPanel:getWidth()) - distanceFromCenter)
+      manaCircleFront:setX(math.floor(mapPanel:getWidth() / 2 + barDistance + gameLeftPanel:getWidth()) + distanceFromCenter)
 
-      healthCircle:setX(math.floor(mapPanel:getWidth() / 2 - barDistance - healthCircle:getWidth()  + gameLeftPanel:getWidth()))
-      manaCircle:setX(math.floor((mapPanel:getWidth() / 2 + barDistance + gameLeftPanel:getWidth())))
+      healthCircle:setX(math.floor(mapPanel:getWidth() / 2 - barDistance - healthCircle:getWidth()  + gameLeftPanel:getWidth()) - distanceFromCenter)
+      manaCircle:setX(math.floor((mapPanel:getWidth() / 2 + barDistance + gameLeftPanel:getWidth())) + distanceFromCenter)
 
       healthCircle:setY(mapPanel:getHeight() / 2 - healthCircle:getHeight() / 2 + gameTopMenu:getHeight())
       manaCircle:setY(mapPanel:getHeight() / 2 - manaCircle:getHeight() / 2 + gameTopMenu:getHeight())
 
       if isExpCircle then
-        expCircleFront:setY(math.floor(mapPanel:getHeight() / 2 + gameTopMenu:getHeight() - barDistance - expCircleFront:getHeight()))
+        expCircleFront:setY(math.floor(mapPanel:getHeight() / 2 + gameTopMenu:getHeight() - barDistance - expCircleFront:getHeight()) - distanceFromCenter)
 
         expCircle:setX(math.floor(mapPanel:getWidth() / 2 - expCircle:getWidth() / 2 + gameLeftPanel:getWidth()))
-        expCircle:setY(math.floor(mapPanel:getHeight() / 2 + gameTopMenu:getHeight() - barDistance - expCircle:getHeight()))
+        expCircle:setY(math.floor(mapPanel:getHeight() / 2 + gameTopMenu:getHeight() - barDistance - expCircle:getHeight()) - distanceFromCenter)
       end
 
       if isSkillCircle then
-        skillCircleFront:setY(math.floor(mapPanel:getHeight() / 2 + gameTopMenu:getHeight() + barDistance))
+        skillCircleFront:setY(math.floor(mapPanel:getHeight() / 2 + gameTopMenu:getHeight() + barDistance) + distanceFromCenter)
 
         skillCircle:setX(math.floor(mapPanel:getWidth() / 2 - expCircle:getWidth() / 2 + gameLeftPanel:getWidth()))
-        skillCircle:setY(math.floor(mapPanel:getHeight() / 2 + gameTopMenu:getHeight() + barDistance))
+        skillCircle:setY(math.floor(mapPanel:getHeight() / 2 + gameTopMenu:getHeight() + barDistance) + distanceFromCenter)
       end
     else
-      healthCircleFront:setX(math.floor(mapPanel:getWidth() / 2 - barDistance - healthCircle:getWidth()))
-      manaCircleFront:setX(math.floor(mapPanel:getWidth() / 2 + barDistance))
+      healthCircleFront:setX(math.floor(mapPanel:getWidth() / 2 - barDistance - healthCircle:getWidth()) - distanceFromCenter)
+      manaCircleFront:setX(math.floor(mapPanel:getWidth() / 2 + barDistance) + distanceFromCenter)
 
-      healthCircle:setX(math.floor(mapPanel:getWidth() / 2 - barDistance - healthCircle:getWidth()))
-      manaCircle:setX(math.floor((mapPanel:getWidth() / 2 + barDistance)))
+      healthCircle:setX(math.floor(mapPanel:getWidth() / 2 - barDistance - healthCircle:getWidth()) - distanceFromCenter)
+      manaCircle:setX(math.floor((mapPanel:getWidth() / 2 + barDistance)) + distanceFromCenter)
 
       healthCircle:setY(mapPanel:getHeight() / 2 - healthCircle:getHeight() / 2 + gameTopMenu:getHeight())
       manaCircle:setY(mapPanel:getHeight() / 2 - manaCircle:getHeight() / 2 + gameTopMenu:getHeight())
 
       if isExpCircle then
-        expCircleFront:setY(math.floor(mapPanel:getHeight() / 2 + gameTopMenu:getHeight() - barDistance - expCircleFront:getHeight()))
+        expCircleFront:setY(math.floor(mapPanel:getHeight() / 2 + gameTopMenu:getHeight() - barDistance - expCircleFront:getHeight()) - distanceFromCenter)
 
         expCircle:setX(math.floor(mapPanel:getWidth() / 2 - expCircle:getWidth() / 2))
-        expCircle:setY(math.floor(mapPanel:getHeight() / 2 + gameTopMenu:getHeight() - barDistance - expCircle:getHeight()))
+        expCircle:setY(math.floor(mapPanel:getHeight() / 2 + gameTopMenu:getHeight() - barDistance - expCircle:getHeight()) - distanceFromCenter)
       end
 
       if isSkillCircle then
-        skillCircleFront:setY(math.floor(mapPanel:getHeight() / 2 + gameTopMenu:getHeight() + barDistance))
+        skillCircleFront:setY(math.floor(mapPanel:getHeight() / 2 + gameTopMenu:getHeight() + barDistance) + distanceFromCenter)
 
         skillCircle:setX(math.floor(mapPanel:getWidth() / 2 - expCircle:getWidth() / 2))
-        skillCircle:setY(math.floor(mapPanel:getHeight() / 2 + gameTopMenu:getHeight() + barDistance))
+        skillCircle:setY(math.floor(mapPanel:getHeight() / 2 + gameTopMenu:getHeight() + barDistance) + distanceFromCenter)
       end
     end
 
@@ -284,6 +301,36 @@ end
 -------------------------------------------------
 --Controls---------------------------------------
 -------------------------------------------------
+
+function setHealthCircle(value)
+  value = toboolean(value)
+  isHealthCircle = value
+  if value then
+    healthCircle:setVisible(true)
+    healthCircleFront:setVisible(true)
+    whenMapResizeChange()
+  else
+    healthCircle:setVisible(false)
+    healthCircleFront:setVisible(false)
+  end
+
+  g_settings.set('healthcircle_hpcircle', not value)
+end
+
+function setManaCircle(value)
+  value = toboolean(value)
+  isManaCircle = value
+  if value then
+    manaCircle:setVisible(true)
+    manaCircleFront:setVisible(true)
+    whenMapResizeChange()
+  else
+    manaCircle:setVisible(false)
+    manaCircleFront:setVisible(false)
+  end
+
+  g_settings.set('healthcircle_mpcircle', not value)
+end
 
 function setExpCircle(value)
   value = toboolean(value)
@@ -335,6 +382,26 @@ function setSkillType(skill)
   end
 end
 
+function setDistanceFromCenter(value)
+  distanceFromCenter = value
+  whenMapResizeChange()
+
+  g_settings.set('healthcircle_distfromcenter', value)
+end
+
+function setCircleOpacity(value)
+  healthCircle:setOpacity(value)
+  healthCircleFront:setOpacity(value)
+  manaCircle:setOpacity(value)
+  manaCircleFront:setOpacity(value)
+  expCircle:setOpacity(value)
+  expCircleFront:setOpacity(value)
+  skillCircle:setOpacity(value)
+  skillCircleFront:setOpacity(value)
+
+  g_settings.set('healthcircle_opacity', value)
+end
+
 -------------------------------------------------
 --Option Settings--------------------------------
 -------------------------------------------------
@@ -345,9 +412,15 @@ function addToOptionsModule()
   modules.client_options.addTab(tr('Hp Mp Circle'), optionPanel, '/game_healthcircle/img_game_healthcircle/hp_mp_circle')
 
   --UI values
+  healthCheckBox = optionPanel:recursiveGetChildById('healthCheckBox')
+  manaCheckBox = optionPanel:recursiveGetChildById('manaCheckBox')
   experienceCheckBox = optionPanel:recursiveGetChildById('experienceCheckBox')
   skillCheckBox = optionPanel:recursiveGetChildById('skillCheckBox')
   chooseSkillComboBox = optionPanel:recursiveGetChildById('chooseSkillComboBox')
+  distFromCenLabel = optionPanel:recursiveGetChildById('distFromCenLabel')
+  distFromCenScrollbar = optionPanel:recursiveGetChildById('distFromCenScrollbar')
+  opacityLabel = optionPanel:recursiveGetChildById('opacityLabel')
+  opacityScrollbar = optionPanel:recursiveGetChildById('opacityScrollbar')
 
   --ComboBox start values 
   chooseSkillComboBox:addOption('magic')
@@ -360,9 +433,16 @@ function addToOptionsModule()
   chooseSkillComboBox:addOption('fishing')
 
   --Set values
+  healthCheckBox:setChecked(isHealthCircle)
+  manaCheckBox:setChecked(isManaCircle)
   experienceCheckBox:setChecked(isExpCircle)
   skillCheckBox:setChecked(isSkillCircle)
   chooseSkillComboBox:setOption(skillType)
   --Prevent skill overwritten before initialize
   skillsLoaded = true
+
+  distFromCenLabel:setText('Distance: ' .. distanceFromCenter)
+  distFromCenScrollbar:setValue(distanceFromCenter)
+  opacityLabel:setText('Opacity: ' .. opacityCircle)
+  opacityScrollbar:setValue(opacityCircle * 100)
 end

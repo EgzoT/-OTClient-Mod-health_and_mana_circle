@@ -16,7 +16,7 @@ Add folder [game_healthcircle] to "mods" or "modules" folder (recommended "mods"
 
 # Additional options
 
-![Options](https://dl.getdropbox.com/s/eji2inrqr42l7ag/options_hp_mp_circle.png)
+![Options](https://dl.getdropbox.com/s/lhhs85pjup6xn17/options_hp_mp_circle_2.png)
 
 To change module options go to **options module** and set **Hp MP Circle**.
 
