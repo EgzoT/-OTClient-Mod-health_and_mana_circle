@@ -77,18 +77,29 @@ end
 
 function terminate()
   healthCircle:destroy()
+  healthCircle = nil
   manaCircle:destroy()
+  manaCircle = nil
   expCircle:destroy()
+  expCircle = nil
   skillCircle:destroy()
+  skillCircle = nil
 
   healthCircleFront:destroy()
+  healthCircleFront = nil
   manaCircleFront:destroy()
+  manaCircleFront = nil
   expCircleFront:destroy()
+  expCircleFront = nil
   skillCircleFront:destroy()
+  skillCircleFront = nil
 
   terminateOnHpAndMpChange()
   terminateOnGeometryChange()
   terminateOnLoginChange()
+
+  --Delete from options module
+  destroyOptionsModule()
 end
 
 -------------------------------------------------
@@ -406,6 +417,17 @@ end
 --Option Settings--------------------------------
 -------------------------------------------------
 
+optionPanel = nil
+healthCheckBox = nil
+manaCheckBox = nil
+experienceCheckBox = nil
+skillCheckBox = nil
+chooseSkillComboBox = nil
+distFromCenLabel = nil
+distFromCenScrollbar = nil
+opacityLabel = nil
+opacityScrollbar = nil
+
 function addToOptionsModule()
   --Add to options module
   optionPanel = g_ui.loadUI('option_healthcircle')
@@ -445,4 +467,19 @@ function addToOptionsModule()
   distFromCenScrollbar:setValue(distanceFromCenter)
   opacityLabel:setText('Opacity: ' .. opacityCircle)
   opacityScrollbar:setValue(opacityCircle * 100)
+end
+
+function destroyOptionsModule()
+  healthCheckBox = nil
+  manaCheckBox = nil
+  experienceCheckBox = nil
+  skillCheckBox = nil
+  chooseSkillComboBox = nil
+  distFromCenLabel = nil
+  distFromCenScrollbar = nil
+  opacityLabel = nil
+  opacityScrollbar = nil
+
+  modules.client_options.removeTab('Hp Mp Circle')
+  optionPanel = nil
 end
