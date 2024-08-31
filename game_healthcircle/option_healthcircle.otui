@@ -7,7 +7,6 @@ Panel
     anchors.left: parent.left
     anchors.top: parent.top
     width: 140
-    //margin-top: 8
     @onCheckChange: |
       if self:isChecked() then
         modules.game_healthcircle.setHealthCircle(true)

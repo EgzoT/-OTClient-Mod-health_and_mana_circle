@@ -144,6 +144,7 @@ function whenHealthChange()
     local Yhppc = math.floor(208 * (1 - (healthPercent / 100)))
     local rect = { x = 0, y = Yhppc, width = 63, height = 208 }
     healthCircleFront:setImageClip(rect)
+    healthCircleFront:setImageRect(rect)
 
     if healthPercent > 92 then
       healthCircleFront:setImageColor("#00BC00")
@@ -159,7 +160,7 @@ function whenHealthChange()
       healthCircleFront:setImageColor("#850C0C")
     end
 
-    healthCircleFront:setY(healthCircle:getY() + Yhppc)
+    healthCircleFront:setY(healthCircle:getY())
   end
 end
 
@@ -169,8 +170,9 @@ function whenManaChange()
     local Ymppc = math.floor(208 * (1 - (manaPercent / 100)))
     local rect = { x = 0, y = Ymppc, width = 63, height = 208 }
     manaCircleFront:setImageClip(rect)
+    manaCircleFront:setImageRect(rect)
     
-    manaCircleFront:setY(manaCircle:getY() + Ymppc)
+    manaCircleFront:setY(manaCircle:getY())
   end
 end
 
@@ -181,8 +183,9 @@ function whenSkillsChange()
       local Xexpc = math.floor(208 * (1 - player:getLevelPercent() / 100))
       local rect = { x = -1 * Xexpc, y = 0, width = 208, height = 63 }
       expCircleFront:setImageClip(rect)
+      expCircleFront:setImageRect(rect)
 
-      expCircleFront:setX(expCircle:getX() - Xexpc)
+      expCircleFront:setX(expCircle:getX())
     end
 
     if isSkillCircle then
@@ -217,8 +220,9 @@ function whenSkillsChange()
       
       local rect = { x = -1 * Xskillpc, y = 0, width = 208, height = 63 }
       skillCircleFront:setImageClip(rect)
+      skillCircleFront:setImageRect(rect)
 
-      skillCircleFront:setX(expCircle:getX() - Xskillpc)
+      skillCircleFront:setX(expCircle:getX())
     end
   end
 end
