@@ -462,6 +462,8 @@ function destroyOptionsModule()
   opacityLabel = nil
   opacityScrollbar = nil
 
-  modules.client_options.removeTab('Hp Mp Circle')
+  if modules.client_options.removeTab then
+    modules.client_options.removeTab('Hp Mp Circle')
+  end
   optionPanel = nil
 end
